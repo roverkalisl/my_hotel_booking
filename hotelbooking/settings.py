@@ -123,3 +123,10 @@ ALLOWED_HOSTS = ['roverkalisl.pythonanywhere.com']
 # Static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/
+# Production settings
+DEBUG = False
+ALLOWED_HOSTS = ['roverkalisl.pythonanywhere.com']
+
+# Static files
+STATIC_ROOT = '/home/roverkalisl/my_hotel_booking/staticfiles'
+STATIC_URL = '/static/'
