@@ -5,4 +5,4 @@ def home(request):
     return render(request, 'home.html')
 
 def hotel_list(request):
-    return HttpResponse("Hotels list page")
+    return HttpResponse("Hotels list page - Working!")
