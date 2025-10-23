@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Confirmed</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 0; background: #f8f9fa; }
+        .header { background: #27ae60; color: white; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .success-card { background: white; padding: 30px; border-radius: 10px; margin: 20px 0; text-align: center; }
+        .btn { background: #3498db; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px; }
+        .booking-details { background: #e8f4fd; padding: 20px; border-radius: 5px; margin: 20px 0; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>✅ Booking Confirmed!</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="success-card">
+            <h2>Thank You for Your Booking!</h2>
+            
+            <div class="booking-details">
+                <h3>Booking Details</h3>
+                <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
+                <p><strong>Guest Name:</strong> {{ booking.guest_name }}</p>
+                <p><strong>Hotel:</strong> {{ booking.room.hotel.name }}</p>
+                <p><strong>Room:</strong> {{ booking.room.room_number }}</p>
+                <p><strong>Check-in:</strong> {{ booking.check_in_date }}</p>
+                <p><strong>Check-out:</strong> {{ booking.check_out_date }}</p>
+                <p><strong>Total Price:</strong> රු. {{ booking.total_price }}</p>
+            </div>
+
+            <p>Confirmation email sent to: <strong>{{ booking.guest_email }}</strong></p>
+            
+            <div style="margin-top: 25px;">
+                <a href="/" class="btn">🏠 Home</a>
+                <a href="/hotels/{{ booking.room.hotel.id }}/" class="btn" style="background: #7f8c8d;">🏨 View Hotel</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

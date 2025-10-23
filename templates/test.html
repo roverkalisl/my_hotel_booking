@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test</title>
+</head>
+<body>
+    <h1>Simple Template Test</h1>
+    
+    <h2>Hotels Data:</h2>
+    <div id="hotel-data">
+        {% for hotel in hotels %}
+            <div style="border: 2px solid green; padding: 10px; margin: 10px;">
+                <h3>Hotel ID: {{ hotel.id }}</h3>
+                <p>Name: {{ hotel.name }}</p>
+                <p>Location: {{ hotel.location }}</p>
+                <p>Price: රු. {{ hotel.price_per_night }}</p>
+            </div>
+        {% empty %}
+            <div style="border: 2px solid red; padding: 10px;">
+                <h3>NO HOTELS FOUND IN TEMPLATE!</h3>
+                <p>Template is working but no data passed from view.</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

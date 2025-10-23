@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ hotel.name }} - SL Hotel Booking</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #f8f9fa; 
+        }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px; 
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .hotel-header { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .room-card { 
+            background: white; 
+            padding: 20px; 
+            margin: 15px 0; 
+            border-radius: 5px; 
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn { 
+            background: #3498db; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            display: inline-block; 
+            margin: 5px; 
+        }
+        .amenity-tag { 
+            background: #ecf0f1; 
+            padding: 8px 15px; 
+            border-radius: 20px; 
+            margin: 5px; 
+            display: inline-block; 
+        }
+        .price { 
+            color: #e74c3c; 
+            font-size: 1.3em; 
+            font-weight: bold; 
+        }
+        .success { 
+            color: green; 
+            font-weight: bold; 
+        }
+        .error { 
+            color: red; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <a href="/" style="color: white; text-decoration: none;">← Home</a> 
+            <span style="margin: 0 10px; color: #bbb;">|</span>
+            <a href="/hotels/" style="color: white; text-decoration: none;">All Hotels</a>
+            <h1>{{ hotel.name }}</h1>
+            <p>📍 {{ hotel.location }}</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hotel-header">
+            <h2>{{ hotel.name }}</h2>
+            <p><strong>Location:</strong> {{ hotel.location }}</p>
+            <p><strong>Description:</strong> {{ hotel.description }}</p>
+            <p><strong>Contact:</strong> {{ hotel.contact_number }}</p>
+            <p><strong>Starting Price:</strong> <span class="price">රු. {{ hotel.price_per_night }}</span> / night</p>
+            
+            <div style="margin: 20px 0;">
+                <h4>🏨 Hotel Amenities:</h4>
+                {% if hotel.has_wifi %}
+                    <span class="amenity-tag">📶 Free WiFi</span>
+                {% endif %}
+                {% if hotel.has_pool %}
+                    <span class="amenity-tag">🏊 Swimming Pool</span>
+                {% endif %}
+                {% if hotel.has_restaurant %}
+                    <span class="amenity-tag">🍴 Restaurant</span>
+                {% endif %}
+                {% if hotel.has_parking %}
+                    <span class="amenity-tag">🅿️ Free Parking</span>
+                {% endif %}
+                {% if not hotel.has_wifi and not hotel.has_pool and not hotel.has_restaurant and not hotel.has_parking %}
+                    <p>No special amenities listed.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <h3>🛏️ Available Rooms ({{ rooms.count }})</h3>
+        
+        {% if rooms %}
+            {% for room in rooms %}
+            <div class="room-card">
+                <h4>{{ room.room_number }} - {{ room.room_type }}</h4>
+                <p><strong>Capacity:</strong> {{ room.capacity }} people</p>
+                <p><strong>Price:</strong> <span class="price">රු. {{ room.price_per_night }}</span> / night</p>
+                <p><strong>Status:</strong> 
+                    <span class="success">✅ Available</span>
+                </p>
+                
+                <div style="margin-top: 15px;">
+                    <a href="/book/{{ room.id }}/" class="btn" style="background: #27ae60;">📅 Book This Room</a>
+                    <a href="/rooms/{{ room.id }}/" class="btn" style="background: #7f8c8d;">🔍 View Room Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="room-card">
+                <h4>No Rooms Available</h4>
+                <p>Sorry, there are no available rooms at this hotel at the moment.</p>
+                <p>Please check back later or contact the hotel directly.</p>
+                <a href="/hotels/" class="btn">← Back to Hotels List</a>
+                <a href="/" class="btn" style="background: #95a5a6;">🏠 Home Page</a>
+            </div>
+        {% endif %}
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background: white; border-radius: 10px;">
+            <h3>Need Help?</h3>
+            <p>Contact the hotel directly at: <strong>{{ hotel.contact_number }}</strong></p>
+            <a href="/hotels/" class="btn">← All Hotels</a>
+            <a href="/" class="btn" style="background: #95a5a6;">🏠 Home</a>
+            <a href="/search/" class="btn" style="background: #e74c3c;">🔍 Search More Hotels</a>
+        </div>
+    </div>
+</body>
+</html>

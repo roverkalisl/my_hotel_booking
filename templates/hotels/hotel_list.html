@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Hotels - SL Hotel Booking</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #f8f9fa; 
+        }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px; 
+            text-align: center;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .hotel-card { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 25px; 
+            margin: 20px 0; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        .btn { 
+            background: #3498db; 
+            color: white; 
+            padding: 12px 20px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            display: inline-block; 
+            margin: 5px;
+            font-weight: bold;
+        }
+        .price { 
+            color: #e74c3c; 
+            font-size: 1.3em; 
+            font-weight: bold; 
+        }
+        .amenity-tag { 
+            background: #ecf0f1; 
+            padding: 8px 15px; 
+            border-radius: 20px; 
+            margin: 5px; 
+            display: inline-block; 
+            font-size: 0.9em;
+        }
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏨 All Hotels in Sri Lanka</h1>
+        <p>Discover amazing hotels across the island</p>
+        <a href="/" style="color: white; text-decoration: underline;">← Back to Home</a>
+    </div>
+
+    <div class="container">
+        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; text-align: center;">
+            <h2>🔍 Find Your Perfect Stay</h2>
+            <p>We found <strong>{{ hotels.count }}</strong> hotels for you</p>
+            <a href="/search/" class="btn" style="background: #e74c3c;">Search Hotels</a>
+            <a href="/" class="btn" style="background: #95a5a6;">Home Page</a>
+        </div>
+
+        <div class="hotel-grid">
+            {% for hotel in hotels %}
+            <div class="hotel-card">
+                <h3>{{ hotel.name }}</h3>
+                <p style="color: #7f8c8d; margin: 5px 0;">📍 {{ hotel.location }}</p>
+                <p style="margin: 10px 0;">{{ hotel.description|truncatewords:20 }}</p>
+                
+                <div style="margin: 15px 0;">
+                    <span class="price">රු. {{ hotel.price_per_night }}</span> / night
+                </div>
+                
+                <p><strong>📞:</strong> {{ hotel.contact_number }}</p>
+                
+                <div style="margin: 15px 0;">
+                    {% if hotel.has_wifi %}<span class="amenity-tag">📶 WiFi</span>{% endif %}
+                    {% if hotel.has_pool %}<span class="amenity-tag">🏊 Pool</span>{% endif %}
+                    {% if hotel.has_restaurant %}<span class="amenity-tag">🍴 Restaurant</span>{% endif %}
+                    {% if hotel.has_parking %}<span class="amenity-tag">🅿️ Parking</span>{% endif %}
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <a href="/hotels/{{ hotel.id }}/" class="btn">View Details</a>
+                    {% if hotel.rooms.first %}
+                    <a href="/book/{{ hotel.rooms.first.id }}/" class="btn" style="background: #27ae60;">Book Now</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: white; border-radius: 10px;">
+            <h3>Can't find what you're looking for?</h3>
+            <p>Try our advanced search feature</p>
+            <a href="/search/" class="btn" style="background: #e74c3c;">🔍 Search Hotels</a>
+        </div>
+    </div>
+</body>
+</html>

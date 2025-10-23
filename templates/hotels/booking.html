@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book {{ room.room_number }}</title>
+    <style>
+        body { font-family: Arial; margin: 0; padding: 0; background: #f8f9fa; }
+        .header { background: #2c3e50; color: white; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .booking-card { background: white; padding: 30px; border-radius: 10px; margin: 20px 0; }
+        .form-group { margin: 15px 0; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn { background: #3498db; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .room-summary { background: #e8f4fd; padding: 15px; border-radius: 5px; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <a href="/rooms/{{ room.id }}/" style="color: white; text-decoration: none;">← Back to Room</a>
+            <h1>Book Room {{ room.room_number }}</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="booking-card">
+            <div class="room-summary">
+                <h3>Room Summary</h3>
+                <p><strong>Hotel:</strong> {{ room.hotel.name }}</p>
+                <p><strong>Room:</strong> {{ room.room_number }} - {{ room.room_type }}</p>
+                <p><strong>Price per Night:</strong> රු. {{ room.price_per_night }}</p>
+            </div>
+
+            <h3>Booking Information</h3>
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label>Full Name:</label>
+                    <input type="text" name="guest_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" name="guest_email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number:</label>
+                    <input type="tel" name="guest_phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Check-in Date:</label>
+                    <input type="date" name="check_in_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Check-out Date:</label>
+                    <input type="date" name="check_out_date" required>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <button type="submit" class="btn" style="background: #27ae60;">Confirm Booking</button>
+                    <a href="/rooms/{{ room.id }}/" class="btn" style="background: #95a5a6; text-decoration: none;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Hotels - SL Hotel Booking</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f9fa; }
+        .header { background: #2c3e50; color: white; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .hotel-card { background: white; border-radius: 10px; padding: 20px; margin: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn { background: #3498db; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; }
+        .search-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .search-box input { padding: 10px; margin: 5px; width: 200px; }
+        .search-box button { background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .results-info { background: #e8f4fd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <a href="/" style="color: white; text-decoration: none;">← Back to Home</a>
+            <h1>Search Hotels</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-box">
+            <h3>Search Hotels</h3>
+            <form action="/search/" method="get">
+                <input type="text" name="q" placeholder="Hotel name..." value="{{ query }}">
+                <input type="text" name="location" placeholder="Location..." value="{{ location }}">
+                <button type="submit">Search</button>
+                <a href="/hotels/" style="margin-left: 10px;">View All Hotels</a>
+            </form>
+        </div>
+
+        <div class="results-info">
+            <h3>Search Results</h3>
+            {% if query or location %}
+                <p>
+                    {% if query %}Searching for: "<strong>{{ query }}</strong>"{% endif %}
+                    {% if location %} in <strong>{{ location }}</strong>{% endif %}
+                </p>
+            {% endif %}
+            <p>Found <strong>{{ hotels.count }}</strong> hotels</p>
+        </div>
+        
+        {% for hotel in hotels %}
+        <div class="hotel-card">
+            <h3>{{ hotel.name }}</h3>
+            <p><strong>Location:</strong> {{ hotel.location }}</p>
+            <p>{{ hotel.description }}</p>
+            <p><strong>Price:</strong> රු. {{ hotel.price_per_night }} / night</p>
+            <p><strong>Contact:</strong> {{ hotel.contact_number }}</p>
+            
+            <div style="margin: 10px 0;">
+                {% if hotel.has_wifi %}<span style="background: #ecf0f1; padding: 5px 10px; border-radius: 15px; margin-right: 5px;">📶 WiFi</span>{% endif %}
+                {% if hotel.has_pool %}<span style="background: #ecf0f1; padding: 5px 10px; border-radius: 15px; margin-right: 5px;">🏊 Pool</span>{% endif %}
+                {% if hotel.has_restaurant %}<span style="background: #ecf0f1; padding: 5px 10px; border-radius: 15px; margin-right: 5px;">🍴 Restaurant</span>{% endif %}
+                {% if hotel.has_parking %}<span style="background: #ecf0f1; padding: 5px 10px; border-radius: 15px; margin-right: 5px;">🅿️ Parking</span>{% endif %}
+            </div>
+            
+            <a href="/hotels/{{ hotel.id }}/" class="btn">View Details</a>
+            {% if hotel.rooms.first %}
+            <a href="/book/{{ hotel.rooms.first.id }}/" class="btn" style="background: #27ae60;">Book Now</a>
+            {% endif %}
+        </div>
+        {% empty %}
+        <div class="hotel-card">
+            <h3>No Hotels Found</h3>
+            <p>No hotels match your search criteria. Please try different search terms.</p>
+            <a href="/hotels/" class="btn">View All Hotels</a>
+            <a href="/" class="btn" style="background: #7f8c8d;">Back to Home</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
